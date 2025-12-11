@@ -1,3 +1,4 @@
+/* --- Base Styles (Unchanged) --- */
 .admin-panel {
   min-height: 100vh;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -79,6 +80,7 @@
   border-radius: 5px;
   margin-bottom: 10px;
   font-size: 14px;
+  box-sizing: border-box; /* Added to prevent overflow */
 }
 
 .filter-select {
@@ -88,6 +90,7 @@
   border-radius: 5px;
   font-size: 14px;
   background: white;
+  box-sizing: border-box;
 }
 
 .submissions-items {
@@ -134,27 +137,13 @@
   font-size: 11px;
   font-weight: bold;
   text-transform: uppercase;
+  white-space: nowrap; /* Prevent badge breaking */
 }
 
-.status-badge.pending {
-  background: #fff3cd;
-  color: #856404;
-}
-
-.status-badge.reviewed {
-  background: #d1ecf1;
-  color: #0c5460;
-}
-
-.status-badge.shortlisted {
-  background: #d4edda;
-  color: #155724;
-}
-
-.status-badge.rejected {
-  background: #f8d7da;
-  color: #721c24;
-}
+.status-badge.pending { background: #fff3cd; color: #856404; }
+.status-badge.reviewed { background: #d1ecf1; color: #0c5460; }
+.status-badge.shortlisted { background: #d4edda; color: #155724; }
+.status-badge.rejected { background: #f8d7da; color: #721c24; }
 
 .submission-info {
   margin: 5px 0;
@@ -303,43 +292,11 @@
   margin-bottom: 10px;
 }
 
-/* Responsive */
-@media (max-width: 1024px) {
-  .admin-container {
-    grid-template-columns: 1fr;
-    height: auto;
-  }
-
-  .submissions-list {
-    max-height: 400px;
-  }
-
-  .detail-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 768px) {
-  .admin-header {
-    flex-direction: column;
-    gap: 15px;
-    text-align: center;
-  }
-
-  .header-actions {
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .export-btn {
-    width: 100%;
-  }
-}
-
 /* Tab Styles */
 .tab-buttons {
   display: flex;
   gap: 10px;
+  flex-wrap: wrap; /* Allows tabs to wrap on small screens */
 }
 
 .tab-btn {
@@ -370,6 +327,7 @@
   padding: 30px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   width: 100%;
+  box-sizing: border-box; /* Important for padding */
 }
 
 .loading-analytics {
@@ -437,32 +395,117 @@
   grid-column: 1 / -1;
 }
 
-/* Responsive adjustments for analytics */
+/* =========================================
+   RESPONSIVE ADJUSTMENTS
+   ========================================= */
+
+/* Tablet & Smaller Laptops (1024px) */
+@media (max-width: 1024px) {
+  .admin-container {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  .submissions-list {
+    max-height: 400px;
+    margin-bottom: 20px;
+  }
+  
+  .details-header {
+      flex-wrap: wrap;
+      gap: 15px;
+  }
+
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Tablets & Large Phones (768px) */
 @media (max-width: 768px) {
+  .admin-panel {
+      padding: 10px;
+  }
+
+  .admin-header {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+    padding: 15px;
+  }
+
+  .header-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .export-btn {
+    width: 100%;
+  }
+
+  /* Fix Chart Grid overflow on mobile */
+  .charts-grid {
+    grid-template-columns: 1fr; /* Force single column */
+    gap: 20px;
+  }
+
   .analytics-dashboard {
     padding: 20px;
   }
 
   .stats-cards {
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 15px;
+    grid-template-columns: repeat(2, 1fr); /* 2 per row */
   }
-
-  .charts-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-
-  .chart-container {
-    padding: 15px;
-  }
-
-  .tab-buttons {
-    flex-direction: column;
-    width: 100%;
-  }
-
+  
   .tab-btn {
-    width: 100%;
+      flex: 1; /* Tabs stretch to fill width */
+      text-align: center;
+  }
+}
+
+/* Mobile Phones (480px) */
+@media (max-width: 480px) {
+  .admin-header h1 {
+      font-size: 20px;
+  }
+
+  /* Adjust padding inside details */
+  .submission-details {
+      padding: 15px;
+  }
+
+  .details-header {
+      flex-direction: column;
+      align-items: flex-start;
+  }
+  
+  .details-header h2 {
+      font-size: 22px;
+  }
+
+  .action-buttons {
+      width: 100%;
+      flex-direction: column;
+  }
+
+  .status-dropdown, .delete-btn {
+      width: 100%;
+      text-align: center;
+  }
+
+  /* Make stats cards stack 1 per row on very small screens */
+  .stats-cards {
+      grid-template-columns: 1fr;
+  }
+
+  /* Fix Submission Item Layout */
+  .submission-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 5px;
+  }
+  
+  .status-badge {
+      align-self: flex-start;
   }
 }
