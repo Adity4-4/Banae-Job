@@ -295,9 +295,7 @@ const JobApplicationForm = () => {
       <div className="form-header">
         <h1>Job Application Form</h1>
         <p>Please fill out the form to apply for the position</p>
-        <div className="admin-link">
-          <Link to="/admin" className="admin-button">Admin Panel</Link>
-        </div>
+       
       </div>
 
       <form onSubmit={handleSubmit} className="job-application-form">
